@@ -52,7 +52,7 @@
     <Compile Include="Assets\Scripts\Globals\GameProperties_Aaron.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitController.cs" />
-    <Compile Include="Assets\Scripts\Globals\Global_HUD.cs" />
+    <Compile Include="Assets\Scripts\Globals\GlobalGUI.cs" />
     <Compile Include="Assets\Scripts\Globals\Global_Terrain.cs" />
     <Compile Include="Assets\Scripts\Headquarter\HQ_GUI.cs" />
     <Compile Include="Assets\Scripts\Headquarter\HQ_Research.cs" />
