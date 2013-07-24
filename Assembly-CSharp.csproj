@@ -47,9 +47,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraControll.cs" />
     <Compile Include="Assets\Scripts\Globals\GameProperties.cs" />
-    <Compile Include="Assets\Scripts\Globals\CT_GameProperties.cs" />
-    <Compile Include="Assets\Scripts\Globals\CG_GameProperties.cs" />
-    <Compile Include="Assets\Scripts\Globals\Aaron_GameProperties.cs" />
+    <Compile Include="Assets\Scripts\Globals\GameProperties_CT.cs" />
+    <Compile Include="Assets\Scripts\Globals\GameProperties_CG.cs" />
+    <Compile Include="Assets\Scripts\Globals\GameProperties_Aaron.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitController.cs" />
     <Compile Include="Assets\Scripts\Globals\Global_HUD.cs" />

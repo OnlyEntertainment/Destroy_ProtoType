@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class CT_GameProperties:GameProperties{
+public class GameProperties:MonoBehaviour{
 
     public enum FRACTION { USFederation, EuropeCoaliation, AsianIndustryForce };
     public enum VEHICLES { Jeep, LightTank, MediumTank, HeavyTank, Helicopter, FighterJet, Bomber };
