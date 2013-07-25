@@ -4,7 +4,7 @@ using System.Globalization;
 
 public class GlobalGUI : MonoBehaviour
 {
-
+    public GameObject HeadQuarter;
 
     public Texture2D menuTopBarBackground;
 

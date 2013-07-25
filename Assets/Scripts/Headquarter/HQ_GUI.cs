@@ -6,8 +6,7 @@ using System;
 
 public class HQ_GUI : MonoBehaviour
 {
-    private bool isActive = false;
-    private Color initColor;
+
 
     //Allgemein SideBar Properties
     public float sideBarX = 0f;
@@ -46,9 +45,7 @@ public class HQ_GUI : MonoBehaviour
     public GameObject[] Prefabs =  new GameObject[Enum.GetNames(typeof(GameProperties.VEHICLES)).Length];
     //public Dictionary<string, GameObject> prefabs = new Dictionary<string, GameObject> { Enum.GetNames(typeof(GameProperties.VEHICLES)), "" };
 
-    //Letzter Einheitensammelpunkt
-    private RaycastHit hit_MouseCursor; //Informationsspeicher der Raycasts
-    public  Vector3 collectionPoint = Vector3.zero;
+
 
     //Temporäreres bzw. Stuff
     Texture2D tmpIcon = null;
@@ -62,9 +59,7 @@ public class HQ_GUI : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        collectionPoint = gameObject.transform.position;
 
-        initColor = gameObject.renderer.material.color;
         sideBarStartX = Screen.width;
         sideBarEndX = Screen.width - sideBarWidth;
         sideBarX = sideBarStartX;
@@ -110,10 +105,7 @@ public class HQ_GUI : MonoBehaviour
 
             }
         }   
-        if (isActive && Input.GetMouseButtonDown(1) && Physics.Raycast(Camera.mainCamera.ScreenPointToRay(Input.mousePosition), out hit_MouseCursor, Mathf.Infinity, 512/*9: Weg collider*/))
-        {
-            collectionPoint = hit_MouseCursor.point;            
-        }
+
     }
 
     private void OnGUI()
@@ -135,25 +127,7 @@ public class HQ_GUI : MonoBehaviour
     }
 
 
-    private void OnMouseEnter()
-    {
-        gameObject.renderer.material.color = Color.cyan;
-    }
-
-    private void OnMouseExit()
-    {
-        gameObject.renderer.material.color = initColor;
-    }
-
-    private void OnMouseDown()
-    {
-        if (!isActive)
-        {
-            SlideIN();
-            Global_Terrain.DeselectAll();
-            isActive = true;
-        }
-    }
+  
 
 
     private void GUIUnitBuilding()
@@ -209,6 +183,7 @@ public class HQ_GUI : MonoBehaviour
         }
     }
 
+    #region asd
 
     private GUIContent GetGUIContent(int unit)
     {
@@ -253,8 +228,8 @@ public class HQ_GUI : MonoBehaviour
                 break;
         }
         return content;
-    }
-
+       }
+    #endregion
 
     public void SetInActive()
     {
@@ -262,8 +237,6 @@ public class HQ_GUI : MonoBehaviour
         {
             isSlidingOut = true;
             isSlidingIn = false;
-            isActive = false;
-            gameObject.renderer.material.color = initColor;
         }
     }
 
@@ -277,14 +250,11 @@ public class HQ_GUI : MonoBehaviour
 
     private void Sliding()
     {
-        if (isActive)
-        {
-            gameObject.renderer.material.color = Color.cyan;
-        }
+      
 
         if (isSlidingIn)
         {
-            if (sideBarX >= sideBarEndX) sideBarX -= slidingSpeed * Time.deltaTime;
+            if (sideBarX > sideBarEndX) sideBarX = Mathf.Clamp(sideBarX - slidingSpeed * Time.deltaTime, sideBarEndX,sideBarStartX);
             else
             {
                 isSlidingIn = false;
@@ -295,7 +265,7 @@ public class HQ_GUI : MonoBehaviour
 
         if (isSlidingOut)
         {
-            if (sideBarX <= sideBarStartX) sideBarX += slidingSpeed * Time.deltaTime;
+            if (sideBarX <= sideBarStartX) sideBarX = Mathf.Clamp(sideBarX + slidingSpeed * Time.deltaTime, sideBarEndX,sideBarStartX);
             else
             {
                 isSlidingOut = false;
