@@ -17,6 +17,14 @@ using UnityEngine;
         private RaycastHit hit_MouseCursor; //Informationsspeicher der Raycasts
         public Vector3 collectionPoint = Vector3.zero;
 
+        //Einheitenbau
+        public bool isUnitWorking = false;
+        public int unitWorkingOn = 9;
+        public float unitWorkingProcess = 0;
+        public float unitWorkingStep = 10;
+
+        public GameObject[] Prefabs = new GameObject[Enum.GetNames(typeof(GameProperties.VEHICLES)).Length];
+
 
         void Awake()
         {
@@ -34,6 +42,39 @@ using UnityEngine;
             {
                 collectionPoint = hit_MouseCursor.point;
             }
+
+            if (isUnitWorking)
+            {
+                unitWorkingProcess += unitWorkingStep * Time.deltaTime;
+                if (unitWorkingProcess >= 100)
+                {
+                    if (Prefabs[unitWorkingOn - 1] != null)
+                    {
+                        GameObject go = (GameObject)Instantiate(Prefabs[unitWorkingOn - 1], gameObject.transform.position, gameObject.transform.rotation);
+                        go.transform.localScale = new Vector3(2, 2, 2);
+                        Unit goUnit = go.GetComponent<Unit>();
+                        goUnit.ownUnit_OnAction = "walk";
+                        goUnit.Unit_GoToPoint(collectionPoint);
+
+                        //goUnit.ownUnit_TargetPoint = collectionPoint;
+                        //goUnit.ownUnit_OnAction = "walk";
+                        //goUnit.ownUnit_OnAction = "walk";
+                        //goUnit.ownUnit_OnAction = "walk";
+                        //goUnit.ownUnit_OnAction = "walk";
+                        //goUnit.ownUnit_OnAction = "walk";
+                    }
+
+                    //foreach (GameObject tempCurrentSelectedUnit in currentSelectedUnits)
+                    //{
+                    //tempCurrentSelectedUnit.GetComponent<Unit>().Unit_GoToPoint(hit_MouseCurser .point);
+                    //}
+                    isUnitWorking = false;
+                    unitWorkingOn = 9;
+                    unitWorkingProcess = 0;
+
+
+                }
+            }   
         }
 
         private void OnMouseEnter()
