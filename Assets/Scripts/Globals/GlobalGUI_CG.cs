@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Globalization;
 
-public class GlobalGUI : MonoBehaviour
+public class GlobalGUI_CG : GlobalGUI
 {
     public GameObject HeadQuarter;
 

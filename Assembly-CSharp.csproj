@@ -50,6 +50,9 @@
     <Compile Include="Assets\Scripts\Globals\GameProperties_CT.cs" />
     <Compile Include="Assets\Scripts\Globals\GameProperties_CG.cs" />
     <Compile Include="Assets\Scripts\Globals\GameProperties_Aaron.cs" />
+    <Compile Include="Assets\Scripts\Globals\GlobalGUI_CT.cs" />
+    <Compile Include="Assets\Scripts\Globals\GlobalGUI_CG.cs" />
+    <Compile Include="Assets\Scripts\Globals\GlobalGUI_Aaron.cs" />
     <Compile Include="Assets\Scripts\Headquarter\HeadQuarter.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitController.cs" />
