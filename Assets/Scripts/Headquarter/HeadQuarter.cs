@@ -18,10 +18,12 @@ using UnityEngine;
         public Vector3 collectionPoint = Vector3.zero;
 
         //Einheitenbau
+        public const int untiWorkingLineMax = 5;
         public bool isUnitWorking = false;
         public int unitWorkingOn = 9;
         public float unitWorkingProcess = 0;
-        public float unitWorkingStep = 10;
+        public float unitWorkingSpeed = 10;
+        public int unitWorkingLine = 0;
 
         public GameObject[] Prefabs = new GameObject[Enum.GetNames(typeof(GameProperties.VEHICLES)).Length];
 
@@ -32,20 +34,39 @@ using UnityEngine;
             initColor = gameObject.renderer.material.color;
         }
 
+        public void ProduceUnit(int unitWorkingOn, float unitWorkingSpeed)
+        {
+            if (this.unitWorkingLine == 0)
+            {
+                this.unitWorkingLine++;
+                this.unitWorkingOn = unitWorkingOn;
+                this.unitWorkingSpeed = unitWorkingSpeed;
+                this.unitWorkingProcess = 0;
+            }
+            else if (unitWorkingLine > 0 && unitWorkingOn == this.unitWorkingOn && untiWorkingLine < uni)
+            {
+                this.unitWorkingLine++;
+            }
+        }
+
+
+
         void Update()
         {
-            
+        
+            //Farbe anpassen wenn HQ Aktiv
             if (isActive) {gameObject.renderer.material.color = selectedColor;}
         
-
+            //Wenn Aktiv und Rechtsklick gemacht wird, dann wird neuer Sammeölpunkt gesetzt.
             if (isActive && Input.GetMouseButtonDown(1) && Physics.Raycast(Camera.mainCamera.ScreenPointToRay(Input.mousePosition), out hit_MouseCursor, Mathf.Infinity, 512/*9: Weg collider*/))
             {
                 collectionPoint = hit_MouseCursor.point;
             }
 
+            //Eigentliche Produktion der Einheiten
             if (isUnitWorking)
             {
-                unitWorkingProcess += unitWorkingStep * Time.deltaTime;
+                unitWorkingProcess += unitWorkingSpeed * Time.deltaTime;
                 if (unitWorkingProcess >= 100)
                 {
                     if (Prefabs[unitWorkingOn - 1] != null)
@@ -55,19 +76,8 @@ using UnityEngine;
                         Unit goUnit = go.GetComponent<Unit>();
                         goUnit.ownUnit_OnAction = "walk";
                         goUnit.Unit_GoToPoint(collectionPoint);
-
-                        //goUnit.ownUnit_TargetPoint = collectionPoint;
-                        //goUnit.ownUnit_OnAction = "walk";
-                        //goUnit.ownUnit_OnAction = "walk";
-                        //goUnit.ownUnit_OnAction = "walk";
-                        //goUnit.ownUnit_OnAction = "walk";
-                        //goUnit.ownUnit_OnAction = "walk";
                     }
 
-                    //foreach (GameObject tempCurrentSelectedUnit in currentSelectedUnits)
-                    //{
-                    //tempCurrentSelectedUnit.GetComponent<Unit>().Unit_GoToPoint(hit_MouseCurser .point);
-                    //}
                     isUnitWorking = false;
                     unitWorkingOn = 9;
                     unitWorkingProcess = 0;
