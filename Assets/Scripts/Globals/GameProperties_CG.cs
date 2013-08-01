@@ -13,7 +13,7 @@ public class GameProperties_CG : GameProperties{
     public float creditsTempOverflow = 0;
 
     public static FRACTION fraction = FRACTION.EuropeCoaliation;
-
+    // muh
 	// Use this for initialization
 	private void Start () 
     {
