@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,8 +8,7 @@
     <ProjectGuid>{C138D2FB-6951-A5D2-D595-747130DDFDE2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>
-    </RootNamespace>
+	<RootNamespace></RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -45,16 +44,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\PartikelSystem\TESTScript_Feuerball_Bewegung.cs" />
     <Compile Include="Assets\Scripts\CameraControll.cs" />
     <Compile Include="Assets\Scripts\Globals\GameProperties.cs" />
-    <Compile Include="Assets\Scripts\Globals\GameProperties_CT.cs" />
-    <Compile Include="Assets\Scripts\Globals\GameProperties_CG.cs" />
     <Compile Include="Assets\Scripts\Globals\GameProperties_Aaron.cs" />
-    <Compile Include="Assets\Scripts\Globals\GlobalGUI_CT.cs" />
-    <Compile Include="Assets\Scripts\Globals\GlobalGUI_CG.cs" />
-    <Compile Include="Assets\Scripts\Globals\GlobalGUI_Aaron.cs" />
-    <Compile Include="Assets\Scripts\Headquarter\HeadQuarter.cs" />
-    <Compile Include="Assets\Scripts\Headquarter\Research.cs" />
     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
     <Compile Include="Assets\Scripts\Unit\UnitController.cs" />
     <Compile Include="Assets\Scripts\Globals\GlobalGUI.cs" />
@@ -62,15 +55,9 @@
     <Compile Include="Assets\Scripts\Headquarter\HQ_GUI.cs" />
     <Compile Include="Assets\Scripts\Headquarter\HQ_Research.cs" />
     <Compile Include="Assets\Scripts\KamerSteuerung.cs" />
-    <Compile Include="Assets\PartikelSystem\TESTScript_Feuerball_Bewegung.cs" />
+     <Compile Include="Assets\Scripts\Unit\Unit.cs" />
+     <Compile Include="Assets\Scripts\Unit\UnitController.cs" />
     <None Include="Assets\Scripts\Unit\Unit\Projector Multiply.shader" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="unityeditor.dll" />
-    <Content Include="unityengine.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Scripts\GUI\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -80,4 +67,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  
 </Project>
