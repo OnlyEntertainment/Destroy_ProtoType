@@ -6,12 +6,16 @@ using System;
 public class GameProperties_CT : GameProperties
 {
 
-    private static List<string> messages = new List<string>();
+    private static List<string> messages = new List<string>(); //Gehöhrst eigentlich in GUI
 
-    public enum FRACTION { USFederation, EuropeCoaliation, AsianIndustryForce };
+    //public enum FRACTION { USFederation, EuropeCoaliation, AsianIndustryForce };
+
     public enum VEHICLES { Jeep, LightTank, MediumTank, HeavyTank, Helicopter, FighterJet, Bomber };
+    public  enum PROPERTIES { Health, Armor, AttackGround, AttackAir, AttackSpeed, Speed, BuildingSpeed, Cost, Range };
+    
 
-    public static GameObject g;
+    public static Dictionary<VEHICLES, Dictionary<PROPERTIES, int>> levelOfAllUnits = new Dictionary<VEHICLES, Dictionary<PROPERTIES, int>>();
+
     public Dictionary<VEHICLES, GameObject> unitPrefabs = new Dictionary<VEHICLES, GameObject>() 
     {
         {VEHICLES.Jeep,null},
@@ -24,17 +28,17 @@ public class GameProperties_CT : GameProperties
     };
 
 
-    public struct WorkingUnit
-    {
-        public string name;
-        public string toolTip;
-        public int unitNumber;
-        public int cost;
-        public float workingSpeed;
-        public GameObject prefab;
-    }
+    //public struct WorkingUnit
+    //{
+    //    public string name;
+    //    public string toolTip;
+    //    public int unitNumber;
+    //    public int cost;
+    //    public float workingSpeed;
+    //    public GameObject prefab;
+    //}
 
-    public static Dictionary<VEHICLES, WorkingUnit> workingUnits;
+    //public static Dictionary<VEHICLES, WorkingUnit> workingUnits;
 
     public static int credits = 2000;
 
@@ -74,72 +78,84 @@ public class GameProperties_CT : GameProperties
 
     private void ConfigureUnitsWorking()
     {
+
+        Dictionary<PROPERTIES,int> tmpDict = new Dictionary<PROPERTIES,int>();
+
+        for (int i = 0; i <= Enum.GetNames(typeof(PROPERTIES)).Length; i++)
+        {
+            tmpDict[(PROPERTIES)i] = 0;
+        }
+
         for (int i = 0; i <= Enum.GetNames(typeof(VEHICLES)).Length; i++)
         {
-            WorkingUnit unit = new WorkingUnit();
-            switch (i)
-            {
-                case (int)VEHICLES.Jeep:
-                    unit.name = "Jeep";
-                    unit.toolTip = "Dies ist ein Jeep";
-                    unit.cost = 1000;
-                    unit.workingSpeed = 10.0f;
-                    break;
-                case (int)VEHICLES.LightTank:
-                    //unit.unitNumber = i;
-                    unit.name = "Leichter Panzer";
-                    unit.toolTip = "Dies ist ein leichter Panzer";
-                    unit.cost = 1000;
-                    unit.workingSpeed = 10.0f;
-                    break;
-                case (int)VEHICLES.MediumTank:
-                    //unit.unitNumber = i;
-                    unit.name = "Mittlerer Panzer";
-                    unit.toolTip = "Dies ist ein mittlerer Panzer";
-                    unit.cost = 1000;
-                    unit.workingSpeed = 10.0f;
-                    break;
-                case (int)VEHICLES.HeavyTank:
-                    //unit.unitNumber = i;
-                    unit.name = "Schwerer Panzer";
-                    unit.toolTip = "Dies ist ein dicker fetter mächtiger Panzer";
-                    unit.cost = 1000;
-                    unit.workingSpeed = 10.0f;
-                    break;
-                case (int)VEHICLES.Helicopter:
-                    //unit.unitNumber = i;
-                    unit.name = "Helicopter";
-                    unit.toolTip = "Dies ist ein Helischrauber oder Hubcopter";
-                    unit.cost = 1000;
-                    unit.workingSpeed = 10.0f;
-                    break;
-                case (int)VEHICLES.FighterJet:
-                    //unit.unitNumber = i;
-                    unit.name = "Jäger";
-                    unit.toolTip = "Dies ist ein Jäger, der der fliegt nicht der am Boden";
-                    unit.cost = 1000;
-                    unit.workingSpeed = 10.0f;
-                    break;
-                case (int)VEHICLES.Bomber:
-                    //unit.unitNumber = i;
-                    unit.name = "Bomber";
-                    unit.toolTip = "Dies ist ein Bomber und macht Boom";
-                    unit.cost = 1000;
-                    unit.workingSpeed = 10.0f;
-                    break;
-                default:
-                    //unit.unitNumber = i;
-                    unit.name = "-Unknown-";
-                    unit.toolTip = "-Unknown-";
-                    unit.cost = 999999999;
-                    unit.workingSpeed = 0.1f;
-                    break;                    
-            }
-            unit.unitNumber = i;
-            unit.prefab = unitPrefabs[(VEHICLES)i];
-
-            workingUnits.Add((VEHICLES)i, unit);
+            levelOfAllUnits[(VEHICLES)i] = tmpDict;
         }
+
+        
+            //WorkingUnit unit = new WorkingUnit();
+            //switch (i)
+            //{
+            //    case (int)VEHICLES.Jeep:
+            //        unit.name = "Jeep";
+            //        unit.toolTip = "Dies ist ein Jeep";
+            //        unit.cost = 1000;
+            //        unit.workingSpeed = 10.0f;
+            //        break;
+            //    case (int)VEHICLES.LightTank:
+            //        //unit.unitNumber = i;
+            //        unit.name = "Leichter Panzer";
+            //        unit.toolTip = "Dies ist ein leichter Panzer";
+            //        unit.cost = 1000;
+            //        unit.workingSpeed = 10.0f;
+            //        break;
+            //    case (int)VEHICLES.MediumTank:
+            //        //unit.unitNumber = i;
+            //        unit.name = "Mittlerer Panzer";
+            //        unit.toolTip = "Dies ist ein mittlerer Panzer";
+            //        unit.cost = 1000;
+            //        unit.workingSpeed = 10.0f;
+            //        break;
+            //    case (int)VEHICLES.HeavyTank:
+            //        //unit.unitNumber = i;
+            //        unit.name = "Schwerer Panzer";
+            //        unit.toolTip = "Dies ist ein dicker fetter mächtiger Panzer";
+            //        unit.cost = 1000;
+            //        unit.workingSpeed = 10.0f;
+            //        break;
+            //    case (int)VEHICLES.Helicopter:
+            //        //unit.unitNumber = i;
+            //        unit.name = "Helicopter";
+            //        unit.toolTip = "Dies ist ein Helischrauber oder Hubcopter";
+            //        unit.cost = 1000;
+            //        unit.workingSpeed = 10.0f;
+            //        break;
+            //    case (int)VEHICLES.FighterJet:
+            //        //unit.unitNumber = i;
+            //        unit.name = "Jäger";
+            //        unit.toolTip = "Dies ist ein Jäger, der der fliegt nicht der am Boden";
+            //        unit.cost = 1000;
+            //        unit.workingSpeed = 10.0f;
+            //        break;
+            //    case (int)VEHICLES.Bomber:
+            //        //unit.unitNumber = i;
+            //        unit.name = "Bomber";
+            //        unit.toolTip = "Dies ist ein Bomber und macht Boom";
+            //        unit.cost = 1000;
+            //        unit.workingSpeed = 10.0f;
+            //        break;
+            //    default:
+            //        //unit.unitNumber = i;
+            //        unit.name = "-Unknown-";
+            //        unit.toolTip = "-Unknown-";
+            //        unit.cost = 999999999;
+            //        unit.workingSpeed = 0.1f;
+            //        break;                    
+            //}
+            //unit.unitNumber = i;
+            //unit.prefab = unitPrefabs[(VEHICLES)i];
+
+            //workingUnits.Add((VEHICLES)i, unit);
+        //}
 
 
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class HeadQuarter : MonoBehaviour
+class HeadQuarter_OLD20130802 : MonoBehaviour
 {
 
     public bool isActive = false;
@@ -26,8 +26,7 @@ class HeadQuarter : MonoBehaviour
 
     public int unitWorkingLine = 0;
 
-    private GameObject unitWorkingOn = null;
-    private UnitClass unitScript = null;
+    private GameProperties_CT.WorkingUnit unitWorkingOn = new GameProperties_CT.WorkingUnit();
 
     public GameObject[] Prefabs = new GameObject[Enum.GetNames(typeof(GameProperties.VEHICLES)).Length];
 
@@ -38,36 +37,30 @@ class HeadQuarter : MonoBehaviour
         initColor = gameObject.renderer.material.color;
     }
 
-    public void DeleteFromProductionLine(GameObject unitObject)
+    public void DeleteFromProductionLine(GameProperties_CT.WorkingUnit unit)
     {
-        UnitClass tmpUnitScript = unitObject.GetComponent<UnitClass>();
-
-
         if (unitWorkingLine > 0 &&
-            tmpUnitScript.type == unitScript.type
+            unit.unitNumber == unitWorkingOn.unitNumber
             )
         {
             unitWorkingLine--;
             if (unitWorkingLine == 0) unitWorkingProcess = 0;
-            GameProperties.credits += unitScript.cost[GameProperties_CT.levelOfAllUnits[unitScript.type][GameProperties_CT.PROPERTIES.Cost]];
+            GameProperties.credits += unitWorkingOn.cost;
 
         }
     }
 
     //public void ProduceUnit(int unitWorkingOn, float unitWorkingSpeed)
-    public void ProduceUnit(GameObject unitObject)
+    public void ProduceUnit(GameProperties_CT.WorkingUnit unit)
     {
-        UnitClass tmpUnitScript = unitObject.GetComponent<UnitClass>();
-
         if (this.unitWorkingLine == 0 &&
-            HasEnoughMoney(tmpUnitScript))
+            HasEnoughMoney(unit))
         {
 
-            this.unitWorkingOn = unitObject;
-            this.unitScript = tmpUnitScript;
+            this.unitWorkingOn = unit;
             this.unitWorkingLine++;
             this.unitWorkingProcess = 0;
-            GameProperties.credits -= GameProperties_CT.levelOfAllUnits[unitScript.type][GameProperties_CT.PROPERTIES.Cost];
+            GameProperties.credits -= unitWorkingOn.cost;
             //this.unitWorkingOn = unitWorkingOn;
             //this.unitWorkingSpeed = unitWorkingSpeed;
 
@@ -86,11 +79,9 @@ class HeadQuarter : MonoBehaviour
         }
     }
 
-    private bool HasEnoughMoney(UnitClass tmpUnitScript)
+    private bool HasEnoughMoney(GameProperties_CT.WorkingUnit unit)
     {
-        int tmpCost = tmpUnitScript.cost[GameProperties_CT.levelOfAllUnits[tmpUnitScript.type][GameProperties_CT.PROPERTIES.Cost]];
-
-        if (GameProperties.credits >= tmpCost)
+        if (GameProperties.credits >= unit.cost)
         {
             return true;
         }
@@ -106,7 +97,7 @@ class HeadQuarter : MonoBehaviour
         if (unitWorkingLine > 0)
         {
             //unitWorkingProcess += unitWorkingSpeed * Time.deltaTime;
-            unitWorkingProcess += unitWorkin .workingSpeed * Time.deltaTime;
+            unitWorkingProcess += unitWorkingOn.workingSpeed * Time.deltaTime;
             if (unitWorkingProcess >= 100.0f) //Einheit fertig gebaut
             {
                 GameObject go = (GameObject)Instantiate(
