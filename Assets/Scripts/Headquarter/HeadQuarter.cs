@@ -19,17 +19,13 @@ class HeadQuarter : MonoBehaviour
 
     //Einheitenbau
     public const int unitWorkingLineMax = 5;
-    //public bool isUnitWorking = false;
-    //public float unitWorkingSpeed = 10;
-    //public int unitWorkingOn = 9;
     public float unitWorkingProcess = 0;
-
     public int unitWorkingLine = 0;
 
     private GameObject unitWorkingOn = null;
     private UnitClass unitScript = null;
 
-    public GameObject[] Prefabs = new GameObject[Enum.GetNames(typeof(GameProperties.VEHICLES)).Length];
+    //public GameObject[] Prefabs = new GameObject[Enum.GetNames(typeof(ENUMS.VEHICLES)).Length];
 
 
     void Awake()
@@ -49,7 +45,7 @@ class HeadQuarter : MonoBehaviour
         {
             unitWorkingLine--;
             if (unitWorkingLine == 0) unitWorkingProcess = 0;
-            GameProperties.credits += unitScript.cost[GameProperties_CT.levelOfAllUnits[unitScript.type][GameProperties_CT.PROPERTIES.Cost]];
+            GameProperties.credits += unitScript.cost[GameProperties_CT.levelOfAllUnits[unitScript.type][ENUMS.PROPERTIES.Cost]];
 
         }
     }
@@ -67,28 +63,26 @@ class HeadQuarter : MonoBehaviour
             this.unitScript = tmpUnitScript;
             this.unitWorkingLine++;
             this.unitWorkingProcess = 0;
-            GameProperties.credits -= GameProperties_CT.levelOfAllUnits[unitScript.type][GameProperties_CT.PROPERTIES.Cost];
-            //this.unitWorkingOn = unitWorkingOn;
-            //this.unitWorkingSpeed = unitWorkingSpeed;
+            GameProperties.credits -= GameProperties_CT.levelOfAllUnits[unitScript.type][ENUMS.PROPERTIES.Cost];
+
 
         }
-        //else if (unitWorkingLine > 0 && unitWorkingOn == this.unitWorkingOn && unitWorkingLine < unitWorkingLineMax)
         else if (unitWorkingLine > 0 &&
-            unitWorkingOn.unitNumber == unit.unitNumber)
+            unitWorkingOn == tmpUnitScript)
         {
             if (unitWorkingLine >= unitWorkingLineMax)
             { GameProperties_CT.AddMessage("Maximale Warteschlange erreicht."); }
-            else if (HasEnoughMoney(unit))
+            else if (HasEnoughMoney(tmpUnitScript))
             { 
                 this.unitWorkingLine++;
-                GameProperties.credits -= unitWorkingOn.cost;
+                GameProperties.credits -= unitScript.cost[GetLevel(ENUMS.PROPERTIES.Cost)];
             }
         }
     }
 
     private bool HasEnoughMoney(UnitClass tmpUnitScript)
     {
-        int tmpCost = tmpUnitScript.cost[GameProperties_CT.levelOfAllUnits[tmpUnitScript.type][GameProperties_CT.PROPERTIES.Cost]];
+        int tmpCost = tmpUnitScript.cost[GameProperties_CT.levelOfAllUnits[tmpUnitScript.type][ENUMS.PROPERTIES.Cost]];
 
         if (GameProperties.credits >= tmpCost)
         {
@@ -96,28 +90,27 @@ class HeadQuarter : MonoBehaviour
         }
         else
         {
-            GameProperties_CT.AddMessage("Du hast nicht genug Geld (" + unit.cost.ToString() + ")");
+            GameProperties_CT.AddMessage("Du hast nicht genug Geld (" + tmpCost.ToString() + ")");
             return false;
         }
+    }
+
+    int GetLevel(ENUMS.PROPERTIES propertie)
+    {
+        return GameProperties_CT.levelOfAllUnits[unitScript.type][propertie];
     }
 
     void Production()
     {
         if (unitWorkingLine > 0)
         {
-            //unitWorkingProcess += unitWorkingSpeed * Time.deltaTime;
-            unitWorkingProcess += unitWorkin .workingSpeed * Time.deltaTime;
+            unitWorkingProcess += unitScript.speed[GetLevel(ENUMS.PROPERTIES.Speed)] * Time.deltaTime;
             if (unitWorkingProcess >= 100.0f) //Einheit fertig gebaut
             {
                 GameObject go = (GameObject)Instantiate(
-                    unitWorkingOn.prefab,
+                    unitWorkingOn,
                     gameObject.transform.position,
                     gameObject.transform.rotation);
-
-                //GameObject go = (GameObject)Instantiate(
-                //    GameProperties_CT.workingUnits[(GameProperties_CT.VEHICLES)unitWorkingOn].prefab, 
-                //    gameObject.transform.position, 
-                //    gameObject.transform.rotation);
 
                 go.transform.localScale = new Vector3(2, 2, 2);
                 Unit goUnit = go.GetComponent<Unit>();
@@ -142,29 +135,7 @@ class HeadQuarter : MonoBehaviour
         }
 
         Production();
-                    
-        ////Eigentliche Produktion der Einheiten
-        //if (isUnitWorking)
-        //{
-        //    unitWorkingProcess += unitWorkingSpeed * Time.deltaTime;
-        //    if (unitWorkingProcess >= 100)
-        //    {
-        //        if (Prefabs[unitWorkingOn - 1] != null)
-        //        {
-        //            GameObject go = (GameObject)Instantiate(Prefabs[unitWorkingOn - 1], gameObject.transform.position, gameObject.transform.rotation);
-        //            go.transform.localScale = new Vector3(2, 2, 2);
-        //            Unit goUnit = go.GetComponent<Unit>();
-        //            goUnit.ownUnit_OnAction = "walk";
-        //            goUnit.Unit_GoToPoint(collectionPoint);
-        //        }
-
-        //        isUnitWorking = false;
-        //        unitWorkingOn = 9;
-        //        unitWorkingProcess = 0;
-
-
-        //    }
-        //}   
+        
     }
 
     private void OnMouseEnter()

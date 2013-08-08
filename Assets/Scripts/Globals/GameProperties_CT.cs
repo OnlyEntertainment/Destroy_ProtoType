@@ -10,11 +10,10 @@ public class GameProperties_CT : GameProperties
 
     //public enum FRACTION { USFederation, EuropeCoaliation, AsianIndustryForce };
 
-    public enum VEHICLES { Jeep, LightTank, MediumTank, HeavyTank, Helicopter, FighterJet, Bomber };
-    public  enum PROPERTIES { Health, Armor, AttackGround, AttackAir, AttackSpeed, Speed, BuildingSpeed, Cost, Range };
+    
     
 
-    public static Dictionary<VEHICLES, Dictionary<PROPERTIES, int>> levelOfAllUnits = new Dictionary<VEHICLES, Dictionary<PROPERTIES, int>>();
+    public static Dictionary<VEHICLES, Dictionary<ENUMS.PROPERTIES, int>> levelOfAllUnits = new Dictionary<VEHICLES, Dictionary<ENUMS.PROPERTIES, int>>();
 
     public Dictionary<VEHICLES, GameObject> unitPrefabs = new Dictionary<VEHICLES, GameObject>() 
     {
@@ -79,11 +78,11 @@ public class GameProperties_CT : GameProperties
     private void ConfigureUnitsWorking()
     {
 
-        Dictionary<PROPERTIES,int> tmpDict = new Dictionary<PROPERTIES,int>();
+        Dictionary<ENUMS.PROPERTIES, int> tmpDict = new Dictionary<ENUMS.PROPERTIES, int>();
 
-        for (int i = 0; i <= Enum.GetNames(typeof(PROPERTIES)).Length; i++)
+        for (int i = 0; i <= Enum.GetNames(typeof(ENUMS.PROPERTIES)).Length; i++)
         {
-            tmpDict[(PROPERTIES)i] = 0;
+            tmpDict[(ENUMS.PROPERTIES)i] = 0;
         }
 
         for (int i = 0; i <= Enum.GetNames(typeof(VEHICLES)).Length; i++)

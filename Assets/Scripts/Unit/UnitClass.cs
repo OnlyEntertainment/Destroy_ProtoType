@@ -9,9 +9,9 @@ using UnityEngine;
         //public enum DamageType {Normal};
         //public enum Properties { Health, Armor, AttackGround,AttackAir,AttackSpeed,Speed,BuildingSpeed,Cost,Range};
 
-        private enum ATTACKTYPE { Ground, Air };
+        
 
-        private Dictionary<GameProperties_CT.PROPERTIES, int> level = new Dictionary<GameProperties_CT.PROPERTIES, int>();
+        private Dictionary<ENUMS.PROPERTIES, int> level = new Dictionary<ENUMS.PROPERTIES, int>();
 
         //private enum Properties GameProperties_CT.Properties;
 
@@ -39,30 +39,32 @@ using UnityEngine;
         private void Awake()
         {
             curHealth = maxHealth[0];
-            int lengthOfEnum = Enum.GetNames(typeof(GameProperties_CT.PROPERTIES)).Length;
+            int lengthOfEnum = Enum.GetNames(typeof(ENUMS.PROPERTIES)).Length;
 
             for (int i = 0; i <= lengthOfEnum; i++)
             {
-                level[(GameProperties_CT.PROPERTIES)i] = 0;
+                level[(ENUMS.PROPERTIES)i] = 0;
             }
+
+            RefreshAllLevels();
 
         }
 
 
         public void RefreshAllLevels()
         {
-            int lengthOfEnum = Enum.GetNames(typeof(GameProperties_CT.PROPERTIES)).Length;
+            int lengthOfEnum = Enum.GetNames(typeof(ENUMS.PROPERTIES)).Length;
 
             for (int i = 0; i <= lengthOfEnum; i++)
             {
-                level[(GameProperties_CT.PROPERTIES)i] = GameProperties_CT.levelOfAllUnits[type][(GameProperties_CT.PROPERTIES)i];                   
+                level[(ENUMS.PROPERTIES)i] = GameProperties_CT.levelOfAllUnits[type][(ENUMS.PROPERTIES)i];                   
             }
         }
 
         //public void GetDamage(float damage, DamageType damageType)
         public void GetDamage(float damage)
         {
-            damage = Mathf.Clamp(damage - armor[level[GameProperties_CT.PROPERTIES.Armor]], 0, damage);
+            damage = Mathf.Clamp(damage - armor[level[ENUMS.PROPERTIES.Armor]], 0, damage);
             curHealth = Mathf.Clamp(curHealth - damage, 0, curHealth);
 
             if (curHealth <= 0)
